@@ -4,7 +4,7 @@
 CONF_DIR="/usr/local/apache/conf.d"
 MOD_RPAF_PATH="/usr/local/apache/modules/mod_rpaf.so"
 RPAF_CONF="$CONF_DIR/rpaf.conf"
-APACHECTL=$(which apachectl)
+HTTPD=$(which httpd)
 
 # Função para exibir mensagens de erro
 erro() {
@@ -43,7 +43,7 @@ fi
 
 # 2. Verificando o arquivo de configuração do Apache
 echo "Verificando a configuração do Apache..."
-$APACHECTL configtest
+$HTTPD -t
 if [ $? -ne 0 ]; then
     erro "A configuração do Apache contém erros."
     exit 1
@@ -53,7 +53,7 @@ fi
 
 # 3. Reiniciando o Apache
 echo "Reiniciando o Apache..."
-sudo systemctl restart apache2
+sudo systemctl restart httpd
 if [ $? -ne 0 ]; then
     erro "Falha ao reiniciar o Apache."
     exit 1
@@ -62,3 +62,4 @@ else
 fi
 
 echo "Script de correção finalizado!"
+
